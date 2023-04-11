@@ -1,11 +1,12 @@
 package User_Authentication;
 
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import com.mycompany.personal_finance_management_system.Menu_Page;
 import com.mycompany.personal_finance_management_system.Personal_Finance_Management_System;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Login_Page extends javax.swing.JFrame {
 
@@ -127,29 +128,14 @@ public class Login_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Connection conn = null;
         try {
-            // Load the SQLite JDBC driver
-            Class.forName("org.sqlite.JDBC");
-            // Establish a connection to the database
-            conn = DriverManager.getConnection("jdbc:sqlite:Personal_Information.sqlite");
-            System.out.println("conected");
-            // Do something with the connection
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (DataBase.create_table()) {
+                this.dispose();
+                Registration obj = new Registration();
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login_Page.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.dispose();
-        Registration obj = new Registration();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
