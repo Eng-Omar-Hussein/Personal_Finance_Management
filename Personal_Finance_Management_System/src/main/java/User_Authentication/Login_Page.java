@@ -1,7 +1,6 @@
 package User_Authentication;
 
 import com.mycompany.personal_finance_management_system.Menu_Page;
-import com.mycompany.personal_finance_management_system.Personal_Finance_Management_System;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -138,7 +137,7 @@ public class Login_Page extends javax.swing.JFrame {
             if (currentuser.getEmail().equals(jTextField1.getText())) {
                 test = true;
                 if (currentuser.getPassword().equals(jPasswordField1.getText())) {
-                    Personal_Finance_Management_System.setCookie(currentuser);
+                    Cookies.setCookie(currentuser);
                     System.out.println(currentuser);
                     this.dispose();
                     Menu_Page obj = new Menu_Page();

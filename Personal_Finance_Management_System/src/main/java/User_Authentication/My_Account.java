@@ -1,9 +1,7 @@
 package User_Authentication;
 
 import com.mycompany.personal_finance_management_system.Menu_Page;
-import com.mycompany.personal_finance_management_system.Personal_Finance_Management_System;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,14 +14,14 @@ public class My_Account extends javax.swing.JFrame {
     public My_Account() {
         initComponents();
         this.setVisible(true);
-        jPasswordField1.setText(Personal_Finance_Management_System.getPassword());
-        jTextField1.setText(Personal_Finance_Management_System.getEmail());
-        jTextField2.setText(Personal_Finance_Management_System.getFull_name());
-        jTextField3.setText(Personal_Finance_Management_System.getPhone());
-        jTextField4.setText(Personal_Finance_Management_System.getUsername());
-        jTextField5.setText(Personal_Finance_Management_System.getGender());
-        jTextField6.setText(String.valueOf(Personal_Finance_Management_System.getID()));
-        jTextField7.setText(String.valueOf(Personal_Finance_Management_System.getDob()));
+        jPasswordField1.setText(Cookies.getPassword());
+        jTextField1.setText(Cookies.getEmail());
+        jTextField2.setText(Cookies.getFull_name());
+        jTextField3.setText(Cookies.getPhone());
+        jTextField4.setText(Cookies.getUsername());
+        jTextField5.setText(Cookies.getGender());
+        jTextField6.setText(String.valueOf(Cookies.getID()));
+        jTextField7.setText(String.valueOf(Cookies.getDob()));
     }
 
     /**
@@ -240,12 +238,12 @@ public class My_Account extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
-            User.deleteUser_db(Personal_Finance_Management_System.getID());
+            User.deleteUser_db(Cookies.getID());
         } catch (SQLException ex) {
             Logger.getLogger(My_Account.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(this, "Account deleted Successfully!");
-        Personal_Finance_Management_System.setCookie(new User());
+        Cookies.setCookie(new User());
         this.dispose();
         Login_Page obj = new Login_Page();
     }//GEN-LAST:event_jButton2ActionPerformed

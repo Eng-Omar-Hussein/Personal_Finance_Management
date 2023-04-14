@@ -3,6 +3,7 @@ package com.mycompany.personal_finance_management_system;
 import User_Authentication.Login_Page;
 import User_Authentication.My_Account;
 import User_Authentication.User;
+import User_Authentication.Cookies;
 
 public class Menu_Page extends javax.swing.JFrame {
 
@@ -146,10 +147,10 @@ public class Menu_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Personal_Finance_Management_System.setCookie(new User());
+        Cookies.setCookie(new User());
         this.dispose();
         Login_Page obj = new Login_Page();
-        System.out.println(Personal_Finance_Management_System.getCookie());
+        System.out.println(Cookies.getCookie());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
