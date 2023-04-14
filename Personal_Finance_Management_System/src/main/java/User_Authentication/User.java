@@ -1,5 +1,6 @@
 package User_Authentication;
 
+import static User_Authentication.DataBase.Connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,6 +30,28 @@ public class User {
         this.Dob = Dob;
         this.Gender = Gender;
         this.Phone = Phone;
+    }
+
+    public User() {
+        this.ID = 0;
+        this.Username = null;
+        this.Password = null;
+        this.Email = null;
+        this.Full_name = null;
+        this.Dob = null;
+        this.Gender = null;
+        this.Phone = null;
+    }
+
+    public User(User user) {
+        this.ID = user.ID;
+        this.Username = user.Username;
+        this.Password = user.Password;
+        this.Email = user.Email;
+        this.Full_name = user.Full_name;
+        this.Dob = user.Dob;
+        this.Gender = user.Gender;
+        this.Phone = user.Phone;
     }
 
     public String getFull_name() {
@@ -97,13 +120,16 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "ID=" + ID + ", Username=" + Username + ", Password=" + Password + ", Email=" + Email + "Full_name" + Full_name + ", Phone=" + Phone + ", Dob=" + Dob + ", Gender=" + Gender + '}';
+        return "User{" + "ID=" + ID + ", Username=" + Username + ", Password=" + Password + ", Email=" + Email + ", Full_name=" + Full_name + ", Phone=" + Phone + ", Dob=" + Dob + ", Gender=" + Gender + '}';
     }
 
     public static ArrayList<User> getAllUsers_db() throws SQLException {
         ArrayList<User> userList = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:Personal_Information.sqlite"); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT * FROM users")) {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:Personal_Information.sqlite");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * from users ");
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -118,9 +144,10 @@ public class User {
                 User user = new User(id, username, password, email, full_name, dob, gender, phone);
                 userList.add(user);
             }
-
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            // Handle the exception here
+            e.printStackTrace();
+            throw e;
         }
 
         return userList;
@@ -149,4 +176,18 @@ public class User {
         System.out.println("Data inserted into user table successfully");
 
     }
+
+    public static void deleteUser_db(int id) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        conn = DriverManager.getConnection("jdbc:sqlite:Personal_Information.sqlite");
+        String sql = "delete from users where id=?";
+
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id);
+        stmt.executeUpdate();
+        System.out.println("user deleted");
+
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.mycompany.personal_finance_management_system;
 
 import User_Authentication.Login_Page;
+import User_Authentication.My_Account;
+import User_Authentication.User;
 
 public class Menu_Page extends javax.swing.JFrame {
 
@@ -49,6 +51,11 @@ public class Menu_Page extends javax.swing.JFrame {
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton2);
 
         jButton3.setText("Expense tracking");
@@ -139,10 +146,17 @@ public class Menu_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Personal_Finance_Management_System.Cookie = 0;
+        Personal_Finance_Management_System.setCookie(new User());
         this.dispose();
         Login_Page obj = new Login_Page();
+        System.out.println(Personal_Finance_Management_System.getCookie());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        My_Account obj = new My_Account();
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

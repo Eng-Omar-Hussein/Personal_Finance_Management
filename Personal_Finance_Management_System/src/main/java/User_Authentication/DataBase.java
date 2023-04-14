@@ -41,10 +41,10 @@ public class DataBase {
                          );""";
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
-            System.out.println("ok");
+            System.out.println("table created");
             return true;
         }
         return false;
     }
-
+    
 }
