@@ -1,6 +1,5 @@
 package User_Authentication;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -188,6 +187,42 @@ public class User {
         stmt.executeUpdate();
         System.out.println("user deleted");
 
+    }
+
+    public static void UpdateEmail_db(String newmail) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        conn = DriverManager.getConnection("jdbc:sqlite:Personal_Information.sqlite");
+        String sql = "update users set email=?  where id=?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, newmail);
+        stmt.setInt(2, Cookies.getID());
+        stmt.executeUpdate();
+        System.out.println("Email Updated");
+    }
+
+    public static void UpdatepaPassword_db(String newpass) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        conn = DriverManager.getConnection("jdbc:sqlite:Personal_Information.sqlite");
+        String sql = "update users set password=?  where id=?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, newpass);
+        stmt.setInt(2, Cookies.getID());
+        stmt.executeUpdate();
+        System.out.println("Password Updated");
+    }
+
+    public static void UpdatepaPhone_db(String newphone) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        conn = DriverManager.getConnection("jdbc:sqlite:Personal_Information.sqlite");
+        String sql = "update users set phone=?  where id=?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, newphone);
+        stmt.setInt(2, Cookies.getID());
+        stmt.executeUpdate();
+        System.out.println("Phone Updated");
     }
 
 }
