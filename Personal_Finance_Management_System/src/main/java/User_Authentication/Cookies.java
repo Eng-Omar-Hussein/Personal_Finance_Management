@@ -45,4 +45,16 @@ public class Cookies {
     public static void setCookie(User Cookie) {
         Cookies.Cookie = Cookie;
     }
+
+    static void setEmail(String text) {
+        Cookie.setEmail(text);
+    }
+
+    static void setPhone(String text) {
+        Cookie.setPhone(text);
+    }
+
+    static void setPassword(String text) {
+        Cookie.setPassword(text);
+    }
 }
