@@ -219,16 +219,35 @@ public class Registration extends javax.swing.JFrame {
                 RadioButton = "Gay";
             }
         }
+        if (DataValidation.Dateofbirth_isvalid((String) jComboBox1.getSelectedItem(), (String) jComboBox2.getSelectedItem(), jTextField7.getText())) {
+            if (DataValidation.Email_isvalid(jTextField1.getText())) {
+                if (DataValidation.Password_isvalid(jPasswordField1.getText())) {
+                    if (DataValidation.Phone_isvalid(jTextField3.getText().trim())) {
+                        try {
+                            User.setUser_db(jTextField4.getText(), jPasswordField1.getText(), jTextField1.getText(), jTextField2.getText(), jTextField7.getText() + "-" + jComboBox2.getSelectedItem() + "-" + jComboBox1.getSelectedItem(), RadioButton, jTextField3.getText().trim());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        JOptionPane.showMessageDialog(this, "Accepted");
 
-        try {
-            User.setUser_db(jTextField4.getText(), jPasswordField1.getText(), jTextField1.getText(), jTextField2.getText(), jTextField7.getText() + "-" + jComboBox2.getSelectedItem() + "-" + jComboBox1.getSelectedItem(), RadioButton, jTextField3.getText());
-        } catch (SQLException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+                        this.dispose();
+                        Registration obj = new Registration();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error in Phone");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error in password");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Error in email");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Error in Date of birth");
         }
-        JOptionPane.showMessageDialog(this, "Accepted");
 
-        this.dispose();
-        Registration obj = new Registration();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

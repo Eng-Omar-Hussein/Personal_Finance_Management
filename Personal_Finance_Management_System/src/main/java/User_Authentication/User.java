@@ -8,6 +8,9 @@ import java.sql.SQLException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 public class User {
 
@@ -223,6 +226,43 @@ public class User {
         stmt.setInt(2, Cookies.getID());
         stmt.executeUpdate();
         System.out.println("Phone Updated");
+    }
+    
+    public static void sendmail(String to) {
+        String email = "personalfinanc1@gmail.com";
+        String password = "xhtvgicgdlkitbei";
+        // Set up the properties for the SMTP server
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        // Set up the session
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(email, password);
+            }
+        });
+
+        try {
+            // Set up the email message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject("Personal Finance Management System");
+            message.setText("""
+                            Hi Cookies.getUsername(), 
+                            Your Password: Cookies.getPassword()""");
+            // Send the email
+            Transport.send(message);
+
+            System.out.println("Email sent successfully.");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
