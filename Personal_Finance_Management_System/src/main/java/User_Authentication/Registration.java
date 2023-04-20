@@ -1,11 +1,10 @@
 package User_Authentication;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Registration extends javax.swing.JFrame {
+
+    public static User Cash = new User();
 
     /**
      * Creates new form Registration
@@ -13,6 +12,25 @@ public class Registration extends javax.swing.JFrame {
     public Registration() {
         initComponents();
         this.setVisible(true);
+        jPasswordField1.setText(Registration.Cash.getPassword());
+        jTextField1.setText(Registration.Cash.getEmail());
+        jTextField2.setText(Registration.Cash.getFull_name());
+        jTextField3.setText(Registration.Cash.getPhone());
+        jTextField4.setText(Registration.Cash.getUsername());
+        if (Registration.Cash.getGender().equals("Male")) {
+            jRadioButton1.setSelected(true);
+        } else if (Registration.Cash.getGender().equals("Female")) {
+            jRadioButton2.setSelected(true);
+        }
+        jTextField7.setText(String.valueOf(Registration.Cash.getDob().getYear()));
+        for (int i = 1; i < 32; i++) {
+            if (Registration.Cash.getDob().getDayOfMonth() == i) {
+                jComboBox1.setSelectedIndex(i);
+            }
+            if (Registration.Cash.getDob().getMonthValue() == i) {
+                jComboBox2.setSelectedIndex(i);
+            }
+        }
 
     }
 
@@ -219,20 +237,35 @@ public class Registration extends javax.swing.JFrame {
                 RadioButton = "Gay";
             }
         }
+        if (DataValidation.Dateofbirth_isvalid((String) jComboBox1.getSelectedItem(), (String) jComboBox2.getSelectedItem(), jTextField7.getText())) {
+            if (DataValidation.Email_isvalid(jTextField1.getText())) {
+                if (DataValidation.Password_isvalid(jPasswordField1.getText())) {
+                    if (DataValidation.Phone_isvalid(jTextField3.getText().trim())) {
+                        Cash = new User(jTextField4.getText(), jPasswordField1.getText(), jTextField1.getText(), jTextField2.getText(), jTextField7.getText() + "-" + jComboBox2.getSelectedItem() + "-" + jComboBox1.getSelectedItem(), RadioButton, jTextField3.getText().trim());
+                        DataValidation.sendCode(Cash.getEmail());
+                        VerificationCode obj = new VerificationCode();
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error in Phone");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error in password");
+                }
 
-        try {
-            User.setUser_db(jTextField4.getText(), jPasswordField1.getText(), jTextField1.getText(), jTextField2.getText(), jTextField7.getText() + "-" + jComboBox2.getSelectedItem() + "-" + jComboBox1.getSelectedItem(), RadioButton, jTextField3.getText());
-        } catch (SQLException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error in email");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Error in Date of birth");
         }
-        JOptionPane.showMessageDialog(this, "Accepted");
 
-        this.dispose();
-        Registration obj = new Registration();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
+        Cash = new User();
         Login_Page obj = new Login_Page();
     }//GEN-LAST:event_jButton1ActionPerformed
 

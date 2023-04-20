@@ -1,9 +1,9 @@
-
 package User_Authentication;
 
 import java.time.LocalDate;
 
 public class Cookies {
+
     private static User Cookie;
 
     public static User getCookie() {
