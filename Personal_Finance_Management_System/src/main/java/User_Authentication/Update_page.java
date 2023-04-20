@@ -15,6 +15,7 @@ public class Update_page extends javax.swing.JFrame {
         this.setVisible(true);
         jTextField1.setText(Cookies.getEmail());
         jTextField3.setText(Cookies.getPhone());
+        jPasswordField1.setText(Cookies.getPassword());
     }
 
     /**
@@ -161,20 +162,32 @@ public class Update_page extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (jTextField4.getText().equals(Cookies.getPassword())) {
-            try {
-                User.UpdateEmail_db(jTextField1.getText());
-                User.UpdatepaPhone_db(jTextField3.getText());
-                User.UpdatepaPassword_db(jPasswordField1.getText());
-            } catch (SQLException ex) {
-                Logger.getLogger(Update_page.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Cookies.setEmail(jTextField1.getText());
-            Cookies.setPhone(jTextField3.getText());
-            Cookies.setPassword(jPasswordField1.getText());
-            JOptionPane.showMessageDialog(this, "Accepted");
-            this.dispose();
-            My_Account obj = new My_Account();
+            if (DataValidation.Email_isvalid(jTextField1.getText())) {
+                if (DataValidation.Password_isvalid(jPasswordField1.getText())) {
+                    if (DataValidation.Phone_isvalid(jTextField3.getText())) {
+                        try {
+                            User.UpdateEmail_db(jTextField1.getText());
+                            User.UpdatepaPhone_db(jTextField3.getText());
+                            User.UpdatepaPassword_db(jPasswordField1.getText());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Update_page.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        Cookies.setEmail(jTextField1.getText());
+                        Cookies.setPhone(jTextField3.getText());
+                        Cookies.setPassword(jPasswordField1.getText());
+                        JOptionPane.showMessageDialog(this, "Accepted");
+                        this.dispose();
+                        My_Account obj = new My_Account();
 
+                    } else {
+                        JOptionPane.showMessageDialog(this, "New Phone not valid");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "New Paasword not valid");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "New Email not valid");
+            }
         } else
             JOptionPane.showMessageDialog(this, "Password is wrong!");
     }//GEN-LAST:event_jButton3ActionPerformed
