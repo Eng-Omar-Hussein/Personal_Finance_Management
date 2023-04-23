@@ -36,9 +36,11 @@ public class Update_page extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jPasswordField2 = new javax.swing.JPasswordField();
+        jCheckBox2 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +85,22 @@ public class Update_page extends javax.swing.JFrame {
             }
         });
 
+        jCheckBox1.setBorder(null);
+        jCheckBox1.setIcon(new javax.swing.ImageIcon("icons/icons8-invisible-30.png"));
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox2.setBorder(null);
+        jCheckBox2.setIcon(new javax.swing.ImageIcon("icons/icons8-invisible-30.png"));
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -97,10 +115,14 @@ public class Update_page extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                     .addComponent(jTextField3)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1))
+                    .addComponent(jPasswordField1)
+                    .addComponent(jPasswordField2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jCheckBox2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(211, Short.MAX_VALUE)
@@ -112,9 +134,11 @@ public class Update_page extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -122,14 +146,15 @@ public class Update_page extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jButton3)
-                .addGap(32, 32, 32))
+                .addGap(38, 38, 38))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,7 +165,7 @@ public class Update_page extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
         );
 
         pack();
@@ -160,24 +185,57 @@ public class Update_page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (jTextField4.getText().equals(Cookies.getPassword())) {
-            try {
-                User.UpdateEmail_db(jTextField1.getText());
-                User.UpdatepaPhone_db(jTextField3.getText());
-                User.UpdatepaPassword_db(jPasswordField1.getText());
-            } catch (SQLException ex) {
-                Logger.getLogger(Update_page.class.getName()).log(Level.SEVERE, null, ex);
+        if (jPasswordField2.getText().equals(Cookies.getPassword())) {
+            if (DataValidation.Email_isvalid(jTextField1.getText())) {
+                if (DataValidation.Password_isvalid(jPasswordField1.getText()) || jPasswordField1.getText().isEmpty()) {
+                    if (DataValidation.Phone_isvalid(jTextField3.getText())) {
+                        try {
+                            User.UpdateEmail_db(jTextField1.getText());
+                            Cookies.setEmail(jTextField1.getText());
+                            User.UpdatepaPhone_db(jTextField3.getText());
+                            Cookies.setPhone(jTextField3.getText());
+                            if (DataValidation.Password_isvalid(jPasswordField1.getText())) {
+                                User.UpdatepaPassword_db(jPasswordField1.getText());
+                                Cookies.setPassword(jPasswordField1.getText());
+                            }
+                            JOptionPane.showMessageDialog(this, "Accepted");
+                            this.dispose();
+                            My_Account obj = new My_Account();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Update_page.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "New Phone not valid");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "New Paasword not valid");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "New Email not valid");
             }
-            Cookies.setEmail(jTextField1.getText());
-            Cookies.setPhone(jTextField3.getText());
-            Cookies.setPassword(jPasswordField1.getText());
-            JOptionPane.showMessageDialog(this, "Accepted");
-            this.dispose();
-            My_Account obj = new My_Account();
-
         } else
             JOptionPane.showMessageDialog(this, "Password is wrong!");
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            jCheckBox1.setIcon(new javax.swing.ImageIcon("icons/icons8-eye-30.png"));
+            jPasswordField1.setEchoChar((char) 0);
+        } else {
+            jCheckBox1.setIcon(new javax.swing.ImageIcon("icons/icons8-invisible-30.png"));
+            jPasswordField1.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        if (jCheckBox2.isSelected()) {
+            jCheckBox2.setIcon(new javax.swing.ImageIcon("icons/icons8-eye-30.png"));
+            jPasswordField2.setEchoChar((char) 0);
+        } else {
+            jCheckBox2.setIcon(new javax.swing.ImageIcon("icons/icons8-invisible-30.png"));
+            jPasswordField2.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,15 +276,17 @@ public class Update_page extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

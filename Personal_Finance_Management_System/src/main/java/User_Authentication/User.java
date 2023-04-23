@@ -1,13 +1,18 @@
 package User_Authentication;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 public class User {
 
@@ -51,6 +56,16 @@ public class User {
         this.Dob = user.Dob;
         this.Gender = user.Gender;
         this.Phone = user.Phone;
+    }
+
+    public User(String Username, String Password, String Email, String Full_name, String Dob, String Gender, String Phone) {
+        this.Username = Username;
+        this.Password = Password;
+        this.Email = Email;
+        this.Full_name = Full_name;
+        this.Dob = LocalDate.parse(Dob);
+        this.Gender = Gender;
+        this.Phone = Phone;
     }
 
     public String getFull_name() {
@@ -223,6 +238,43 @@ public class User {
         stmt.setInt(2, Cookies.getID());
         stmt.executeUpdate();
         System.out.println("Phone Updated");
+    }
+    
+    public static void sendmail(String to) {
+        String email = "personalfinanc1@gmail.com";
+        String password = "qhzsxcwzasatxost";
+        // Set up the properties for the SMTP server
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        // Set up the session
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(email, password);
+            }
+        });
+
+        try {
+            // Set up the email message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email, "PFMS"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject("Your PFMS Password");
+            message.setText("Hi "+Cookies.getUsername()+",\nYour Password: "+Cookies.getPassword());
+            // Send the email
+            Transport.send(message);
+
+            System.out.println("Email sent successfully.");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
