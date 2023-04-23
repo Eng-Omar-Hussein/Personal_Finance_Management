@@ -27,9 +27,9 @@ public class DataValidation {
         if (hasUpperCase(first)) {
             return false;
         }
-        if (!hasDigit(first)) {
-            return false;
-        }
+        //if (!hasDigit(first)) {
+        //    return false;
+        //}
         if (!hasLowerCase(first)) {
             return false;
         }
