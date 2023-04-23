@@ -1,5 +1,6 @@
 package com.mycompany.personal_finance_management_system;
 
+import Budget_planner.Main_Budget;
 import User_Authentication.Login_Page;
 import User_Authentication.My_Account;
 import User_Authentication.User;
@@ -139,7 +140,8 @@ public class Menu_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        new Main_Budget().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
