@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Budget_planner;
 
 import java.sql.Connection;
@@ -359,7 +355,7 @@ public class AddBudget extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(431, 431, 431)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(541, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -502,7 +498,7 @@ public class AddBudget extends javax.swing.JFrame {
         jPanel1.add(txt_amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 181, 30));
 
         txt_name.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(25, 167, 206)));
-        jPanel1.add(txt_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 181, 30));
+        jPanel1.add(txt_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 181, 30));
 
         jLabel7.setText("Add Income");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 304, -1, -1));

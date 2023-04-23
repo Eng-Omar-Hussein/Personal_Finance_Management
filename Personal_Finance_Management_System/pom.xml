@@ -17,5 +17,11 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.36.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE170</version>
+        </dependency>
+
     </dependencies>
 </project>
