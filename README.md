@@ -1,3 +1,4 @@
 # Personal_Finance_Management
 
-![images (12)](https://user-images.githubusercontent.com/117474007/231060642-6ce06153-1ec1-4e06-960f-3e25dc35795d.jpeg)
+![Copy-of-Blog-Covers--3-](https://user-images.githubusercontent.com/117474007/234418279-9a8e1f7e-e7e4-49f9-abb7-30189c75a336.png)
+
