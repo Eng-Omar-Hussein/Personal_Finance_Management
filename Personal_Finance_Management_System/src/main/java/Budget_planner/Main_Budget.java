@@ -24,6 +24,7 @@ public class Main_Budget extends javax.swing.JFrame {
     public Main_Budget() {
         initComponents();
         displayAllBudgets();
+        this.setVisible(true);
     }
 
     //method to display all data in table in the main page

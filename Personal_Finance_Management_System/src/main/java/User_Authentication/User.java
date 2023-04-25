@@ -239,10 +239,10 @@ public class User {
         stmt.executeUpdate();
         System.out.println("Phone Updated");
     }
-    
+
     public static void sendmail(String to) {
         String email = "personalfinanc1@gmail.com";
-        String password = "qhzsxcwzasatxost";
+        String password = "azuftxblyagjmmyo";
         // Set up the properties for the SMTP server
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -264,7 +264,7 @@ public class User {
             message.setFrom(new InternetAddress(email, "PFMS"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject("Your PFMS Password");
-            message.setText("Hi "+Cookies.getUsername()+",\nYour Password: "+Cookies.getPassword());
+            message.setText("Hi " + Cookies.getUsername() + ",\nYour Password: " + Cookies.getPassword());
             // Send the email
             Transport.send(message);
 

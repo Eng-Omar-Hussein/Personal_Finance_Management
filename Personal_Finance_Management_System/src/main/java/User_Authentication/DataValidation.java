@@ -13,6 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class DataValidation {
+
     public static int verificationCode;
 
     public static boolean Email_isvalid(String email) {
@@ -86,9 +87,11 @@ public class DataValidation {
                 return false;
             }
         }
-        if(phone.length()<2) return false;
-        String s=phone.substring(0, 2);
-        return phone.length() == 11 && s.equals("01") ;
+        if (phone.length() < 2) {
+            return false;
+        }
+        String s = phone.substring(0, 2);
+        return phone.length() == 11 && s.equals("01");
     }
 
     private static boolean hasUpperCase(String first) {
@@ -126,13 +129,15 @@ public class DataValidation {
         }
         return false;
     }
-    public static int generateRandom(){
-        verificationCode = (int) ((Math.random()*((99999-10000)+1))+10000);
+
+    public static int generateRandom() {
+        verificationCode = (int) ((Math.random() * ((99999 - 10000) + 1)) + 10000);
         return verificationCode;
     }
+
     public static void sendCode(String to) {
         String email = "personalfinanc1@gmail.com";
-        String password = "qhzsxcwzasatxost";
+        String password = "azuftxblyagjmmyo";
         // Set up the properties for the SMTP server
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -154,7 +159,7 @@ public class DataValidation {
             message.setFrom(new InternetAddress(email, "PFMS"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject("Your PFMS verification code");
-            message.setText("Your PFMS verification code is "+generateRandom()+"\nThis code will expire in 24 hours or when you request another code.");
+            message.setText("Your PFMS verification code is " + generateRandom() + "\nThis code will expire in 24 hours or when you request another code.");
             // Send the email
             Transport.send(message);
 
