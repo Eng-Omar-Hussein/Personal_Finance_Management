@@ -78,7 +78,6 @@ public class IncomeData {
                 List.add(user);
             }
         } catch (SQLException e) {
-            // Handle the exception here
             e.printStackTrace();
             throw e;
         }
