@@ -12,26 +12,27 @@ public class Registration extends javax.swing.JFrame {
     public Registration() {
         initComponents();
         this.setVisible(true);
-        jPasswordField1.setText(Registration.Cash.getPassword());
-        jTextField1.setText(Registration.Cash.getEmail());
-        jTextField2.setText(Registration.Cash.getFull_name());
-        jTextField3.setText(Registration.Cash.getPhone());
-        jTextField4.setText(Registration.Cash.getUsername());
-        if (Registration.Cash.getGender().equals("Male")) {
-            jRadioButton1.setSelected(true);
-        } else if (Registration.Cash.getGender().equals("Female")) {
-            jRadioButton2.setSelected(true);
-        }
-        jTextField7.setText(String.valueOf(Registration.Cash.getDob().getYear()));
-        for (int i = 1; i < 32; i++) {
-            if (Registration.Cash.getDob().getDayOfMonth() == i) {
-                jComboBox1.setSelectedIndex(i);
+        if (jTextField1.getText() == null) {
+            jPasswordField1.setText(Registration.Cash.getPassword());
+            jTextField1.setText(Registration.Cash.getEmail());
+            jTextField2.setText(Registration.Cash.getFull_name());
+            jTextField3.setText(Registration.Cash.getPhone());
+            jTextField4.setText(Registration.Cash.getUsername());
+            if (Registration.Cash.getGender().equals("Male")) {
+                jRadioButton1.setSelected(true);
+            } else if (Registration.Cash.getGender().equals("Female")) {
+                jRadioButton2.setSelected(true);
             }
-            if (Registration.Cash.getDob().getMonthValue() == i) {
-                jComboBox2.setSelectedIndex(i);
+            jTextField7.setText(String.valueOf(Registration.Cash.getDob().getYear()));
+            for (int i = 1; i < 32; i++) {
+                if (Registration.Cash.getDob().getDayOfMonth() == i) {
+                    jComboBox1.setSelectedIndex(i);
+                }
+                if (Registration.Cash.getDob().getMonthValue() == i) {
+                    jComboBox2.setSelectedIndex(i);
+                }
             }
         }
-
     }
 
     /**
