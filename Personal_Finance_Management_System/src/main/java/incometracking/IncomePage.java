@@ -161,6 +161,7 @@ public class IncomePage extends javax.swing.JFrame {
         else{
             Date date = new Date();
             try {
+                DataBaseIncome.create_table();
                 IncomeData.setIncome_Data((String)CBox.getSelectedItem(), Integer.parseInt(TAmount.getText()), TDescription.getText(),String.valueOf(date));
             } catch (SQLException ex) {
                 Logger.getLogger(IncomePage.class.getName()).log(Level.SEVERE, null, ex);
