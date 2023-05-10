@@ -1,6 +1,7 @@
 package com.mycompany.personal_finance_management_system;
 
 import Budget_planner.Main_Budget;
+import Goal_Setting.Goal_Planner;
 import User_Authentication.Login_Page;
 import User_Authentication.My_Account;
 import User_Authentication.User;
@@ -152,7 +153,14 @@ public class Menu_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        Goal_Planner obj = null;
+        try {
+            obj = new Goal_Planner();
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu_Page.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        obj.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
