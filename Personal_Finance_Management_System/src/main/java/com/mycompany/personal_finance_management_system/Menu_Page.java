@@ -1,6 +1,7 @@
 package com.mycompany.personal_finance_management_system;
 
 import Budget_planner.Main_Budget;
+import Goal_Setting.Goal_Planner;
 import User_Authentication.Login_Page;
 import User_Authentication.My_Account;
 import User_Authentication.User;
