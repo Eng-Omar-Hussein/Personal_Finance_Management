@@ -404,6 +404,10 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Exit"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jLabel7AncestorAdded"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel7MouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

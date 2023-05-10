@@ -4,6 +4,7 @@
  */
 package Budget_planner;
 
+import com.mycompany.personal_finance_management_system.Menu_Page;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -258,6 +259,20 @@ public class Main_Budget extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Exit");
+        jLabel7.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jLabel7AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -333,6 +348,16 @@ public class Main_Budget extends javax.swing.JFrame {
         new AddBudget().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel7AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel7AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7AncestorAdded
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+        Menu_Page obj=new Menu_Page();
+        this.dispose();
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
