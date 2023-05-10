@@ -152,7 +152,14 @@ public class Menu_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        Goal_Planner obj = null;
+        try {
+            obj = new Goal_Planner();
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu_Page.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        obj.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
