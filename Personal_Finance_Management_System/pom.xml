@@ -27,5 +27,15 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE170</version>
         </dependency>
+        <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>jcalendar-1.4</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>com.formdev</groupId>
+          <artifactId>flatlaf</artifactId>
+          <version>3.1.1</version>
+        </dependency>
     </dependencies>
 </project>
