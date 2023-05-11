@@ -143,7 +143,7 @@ public class Login_Page extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 354, Short.MAX_VALUE)
+            .addGap(0, 574, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +198,7 @@ public class Login_Page extends javax.swing.JFrame {
                 .addGap(182, 182, 182))
         );
 
-        setSize(new java.awt.Dimension(914, 677));
+        setSize(new java.awt.Dimension(1134, 805));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
