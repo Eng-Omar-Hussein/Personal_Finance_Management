@@ -26,51 +26,93 @@ public class Update_page extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPasswordField2 = new javax.swing.JPasswordField();
+        jTextField1 = new javax.swing.JTextField();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jTextField3 = new javax.swing.JTextField();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jButton3 = new javax.swing.JButton();
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Update");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
-        jPanel1.setPreferredSize(new java.awt.Dimension(502, 379));
-
-        jTextField1.setBackground(new java.awt.Color(0, 153, 153));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "New Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
-
-        jTextField3.setBackground(new java.awt.Color(0, 153, 153));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "New Phone", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
-
-        jPasswordField1.setBackground(new java.awt.Color(0, 153, 153));
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "New Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
-
-        jCheckBox1.setBackground(new java.awt.Color(0, 153, 153));
-        jCheckBox1.setBorder(null);
-        jCheckBox1.setIcon(new javax.swing.ImageIcon("icons/icons8-invisible-30.png"));
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+        jButton4.setBackground(new java.awt.Color(255, 255, 255));
+        jButton4.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon("icons/icons8-user-settings-48.png")
+        );
+        jButton4.setToolTipText("Profile");
+        jButton4.setBorder(null);
+        jButton4.setContentAreaFilled(false);
+        jButton4.setFocusPainted(false);
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setMaximumSize(new java.awt.Dimension(50, 48));
+        jButton4.setMinimumSize(new java.awt.Dimension(48, 48));
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton4MouseExited(evt);
             }
         });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 90, 90));
 
-        jPasswordField2.setBackground(new java.awt.Color(0, 153, 153));
+        jButton5.setBackground(new java.awt.Color(255, 255, 255));
+        jButton5.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon("icons/icons8-logout-32.png"));
+        jButton5.setToolTipText("Signout");
+        jButton5.setBorder(null);
+        jButton5.setContentAreaFilled(false);
+        jButton5.setFocusPainted(false);
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setMaximumSize(new java.awt.Dimension(50, 48));
+        jButton5.setMinimumSize(new java.awt.Dimension(48, 48));
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton5MouseExited(evt);
+            }
+        });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 80, 80));
+
         jPasswordField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPasswordField2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Past Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        getContentPane().add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 230, 340, -1));
 
-        jCheckBox2.setBackground(new java.awt.Color(0, 153, 153));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "New Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 340, -1));
+
+        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jPasswordField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "New Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 340, -1));
+
+        jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "New Phone", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 340, -1));
+
+        jCheckBox2.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox2.setBorder(null);
         jCheckBox2.setIcon(new javax.swing.ImageIcon("icons/icons8-invisible-30.png"));
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -78,114 +120,40 @@ public class Update_page extends javax.swing.JFrame {
                 jCheckBox2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 250, -1, 22));
+
+        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setBorder(null);
+        jCheckBox1.setIcon(new javax.swing.ImageIcon("icons/icons8-invisible-30.png"));
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 370, -1, 22));
 
         jButton3.setText("Update");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton3MouseExited(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 500, 340, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPasswordField2)
-                            .addComponent(jTextField1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jButton3)))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(19, 19, 19))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/fns5832m.png"));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1580, 810));
 
-        jToolBar1.setRollover(true);
-
-        jButton1.setText("Sign out");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton1);
-
-        jButton2.setText("My Account");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton2);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pack();
+        setSize(new java.awt.Dimension(1134, 805));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        My_Account obj = new My_Account();
-        this.dispose();
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Cookies.setCookie(new User());
-        this.dispose();
-        Login_Page obj = new Login_Page();
-        System.out.println(Cookies.getCookie());
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (jPasswordField2.getText().equals(Cookies.getPassword())) {
@@ -193,12 +161,12 @@ public class Update_page extends javax.swing.JFrame {
                 if (DataValidation.Password_isvalid(jPasswordField1.getText()) || jPasswordField1.getText().isEmpty()) {
                     if (DataValidation.Phone_isvalid(jTextField3.getText())) {
                         try {
-                            User.UpdateEmail_db(jTextField1.getText());
+                            DataBase.UpdateEmail_db(jTextField1.getText());
                             Cookies.setEmail(jTextField1.getText());
-                            User.UpdatepaPhone_db(jTextField3.getText());
+                            DataBase.UpdatepaPhone_db(jTextField3.getText());
                             Cookies.setPhone(jTextField3.getText());
                             if (DataValidation.Password_isvalid(jPasswordField1.getText())) {
-                                User.UpdatepaPassword_db(jPasswordField1.getText());
+                                DataBase.UpdatepaPassword_db(jPasswordField1.getText());
                                 Cookies.setPassword(jPasswordField1.getText());
                             }
                             JOptionPane.showMessageDialog(this, "Accepted");
@@ -216,8 +184,9 @@ public class Update_page extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "New Email not valid");
             }
-        } else
+        } else {
             JOptionPane.showMessageDialog(this, "Password is wrong!");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -239,6 +208,46 @@ public class Update_page extends javax.swing.JFrame {
             jPasswordField2.setEchoChar('*');
         }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
+        jButton4.setIcon(new javax.swing.ImageIcon("icons/icons8-user-settings-48 (1).png"));
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/fns5832m2.png"));
+    }//GEN-LAST:event_jButton4MouseEntered
+
+    private void jButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseExited
+        jButton4.setIcon(new javax.swing.ImageIcon("icons/icons8-user-settings-48.png"));
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/fns5832m.png"));
+    }//GEN-LAST:event_jButton4MouseExited
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        My_Account obj = new My_Account();
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
+        jButton5.setIcon(new javax.swing.ImageIcon("icons/icons8-logout-32 (1).png"));
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/fns5832m1.png"));
+    }//GEN-LAST:event_jButton5MouseEntered
+
+    private void jButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseExited
+        jButton5.setIcon(new javax.swing.ImageIcon("icons/icons8-logout-32.png"));
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/fns5832m.png"));
+    }//GEN-LAST:event_jButton5MouseExited
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Cookies.setCookie(new User());
+        this.dispose();
+        Login_Page obj = new Login_Page();
+        System.out.println(Cookies.getCookie());
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/fns5832m3.png"));
+    }//GEN-LAST:event_jButton3MouseEntered
+
+    private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/fns5832m.png"));
+    }//GEN-LAST:event_jButton3MouseExited
 
     /**
      * @param args the command line arguments
@@ -276,16 +285,15 @@ public class Update_page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

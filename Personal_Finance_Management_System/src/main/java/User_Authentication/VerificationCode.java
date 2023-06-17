@@ -151,11 +151,12 @@ public class VerificationCode extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(446, 376));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        DataValidation.sendCode(Registration.Cash.getEmail());
+        SendMessage.sendCode(Registration.Cash.getEmail());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -163,7 +164,7 @@ public class VerificationCode extends javax.swing.JFrame {
 
         if (jTextField4.getText().trim().equals(String.valueOf(DataValidation.verificationCode))) {
             try {
-                User.setUser_db(Registration.Cash.getUsername(), Registration.Cash.getPassword(), Registration.Cash.getEmail(), Registration.Cash.getFull_name(), String.valueOf(Registration.Cash.getDob()), Registration.Cash.getGender(), Registration.Cash.getPhone());
+                DataBase.setUser_db(Registration.Cash.getUsername(), Registration.Cash.getPassword(), Registration.Cash.getEmail(), Registration.Cash.getFull_name(), String.valueOf(Registration.Cash.getDob()), Registration.Cash.getGender(), Registration.Cash.getPhone());
             } catch (SQLException ex) {
                 Logger.getLogger(VerificationCode.class.getName()).log(Level.SEVERE, null, ex);
             }
