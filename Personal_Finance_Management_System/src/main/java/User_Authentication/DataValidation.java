@@ -82,7 +82,7 @@ public class DataValidation {
         return phone.length() == 11 && s.equals("01");
     }
 
-    private static boolean hasUpperCase(String first) {
+    public static boolean hasUpperCase(String first) {
         for (int i = 0; i < first.length(); i++) {
             if (Character.isUpperCase(first.charAt(i))) {
                 return true;
@@ -91,7 +91,7 @@ public class DataValidation {
         return false;
     }
 
-    private static boolean hasDigit(String first) {
+    public static boolean hasDigit(String first) {
         for (int i = 0; i < first.length(); i++) {
             if (Character.isDigit(first.charAt(i))) {
                 return true;
@@ -100,7 +100,7 @@ public class DataValidation {
         return false;
     }
 
-    private static boolean hasWhitespace(String first) {
+    public static boolean hasWhitespace(String first) {
         for (int i = 0; i < first.length(); i++) {
             if (Character.isWhitespace(first.charAt(i))) {
                 return true;
@@ -109,7 +109,7 @@ public class DataValidation {
         return false;
     }
 
-    private static boolean hasLowerCase(String password) {
+    public static boolean hasLowerCase(String password) {
         for (int i = 0; i < password.length(); i++) {
             if (Character.isLowerCase(password.charAt(i))) {
                 return true;
