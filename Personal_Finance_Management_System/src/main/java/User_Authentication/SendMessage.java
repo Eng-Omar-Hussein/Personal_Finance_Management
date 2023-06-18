@@ -16,8 +16,8 @@ import javax.mail.internet.MimeMessage;
 public class SendMessage {
 
     private static final String email = "personalfinanc1@gmail.com";
-    private static final String password = "shlexwguengkbhliX";
-    // X = shlexwguengkbhli
+    private static final String password = "X";
+    // X = znqpowcxtgcwyixg
 
     public static void sendmail(String to) {
         // Set up the properties for the SMTP server
