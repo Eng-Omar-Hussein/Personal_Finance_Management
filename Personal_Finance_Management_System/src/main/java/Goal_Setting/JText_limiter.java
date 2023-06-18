@@ -11,7 +11,7 @@ import javax.swing.text.BadLocationException;
  * @author Mohamed Ahmed
  */
 public class JText_limiter extends PlainDocument{
-    private int limit;
+    private final int limit;
     
     public JText_limiter(int limit) {
         this.limit = limit;
