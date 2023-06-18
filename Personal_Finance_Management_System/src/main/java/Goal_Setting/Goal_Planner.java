@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Goal_Setting;
+import User_Authentication.Cookies;
+import User_Authentication.DataBase;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.mycompany.personal_finance_management_system.Menu_Page;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -27,6 +29,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author Mohamed Ahmed
@@ -37,16 +41,26 @@ public class Goal_Planner extends javax.swing.JFrame {
      * @throws java.sql.SQLException
      */
     public Goal_Planner() throws SQLException {
+        //retreive the data from database
         GoalDBCreator.Connection();
         //unselect every row in jTable 2 when starting a new object
         rowIndex = -1;
         initComponents();
+        total = (int) (DataBase.getTotalIncome_db(Cookies.getID())-DataBase.getTotalExpense_db(Cookies.getID()));
+        if(total < 0)
+            total = 0;
+        System.out.println("total = "+total);
     }
+    //Total amount of saved money
+    private int total;
+    //target amount and date selected from jTable3
+    private int targetAmount;
+    private String selectedDate;
     //Text limiter variable for the discreption JTextArea
-    static int charLimit = 200;
+    private final int charLimit = 200;
     //jTable2 Data selected when clicking on a row
-    static String value1, value2, value3, value4, value5;
-    static int rowIndex;
+    private String value1, value2, value3, value4, value5;
+    private int rowIndex;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,6 +110,18 @@ public class Goal_Planner extends javax.swing.JFrame {
         Update_Button = new javax.swing.JButton();
         Delete_Button = new javax.swing.JButton();
         Progress_Viewer = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jPanel5.setMinimumSize(new java.awt.Dimension(75, 30));
         jPanel5.setLayout(new java.awt.BorderLayout());
@@ -215,7 +241,8 @@ public class Goal_Planner extends javax.swing.JFrame {
         jLabel6.setText("Character Count:");
 
         Save_Button.setFont(Save_Button.getFont().deriveFont(Save_Button.getFont().getStyle() | java.awt.Font.BOLD, 16));
-        Save_Button.setText("💾 Save");
+        Save_Button.setIcon(new javax.swing.ImageIcon("icons/icons8-save-48.png"));
+        Save_Button.setText("Save");
         Save_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Save_ButtonActionPerformed(evt);
@@ -224,10 +251,12 @@ public class Goal_Planner extends javax.swing.JFrame {
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTable1.setModel(GoalDBCreator.model);
-        jTable1.setToolTipText("");
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable1.setEnabled(false);
         jScrollPane2.setViewportView(jTable1);
+        // Enable sorting
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable1.getModel());
+        jTable1.setRowSorter(sorter);
         DialogCellRenderer.Tooltip_setter(jTable1);
 
         javax.swing.GroupLayout Goal_PlannerLayout = new javax.swing.GroupLayout(Goal_Planner);
@@ -237,7 +266,7 @@ public class Goal_Planner extends javax.swing.JFrame {
             .addGroup(Goal_PlannerLayout.createSequentialGroup()
                 .addGroup(Goal_PlannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Goal_PlannerLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(14, Short.MAX_VALUE)
                         .addGroup(Goal_PlannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(Goal_PlannerLayout.createSequentialGroup()
@@ -258,9 +287,6 @@ public class Goal_Planner extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(charCountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(Goal_PlannerLayout.createSequentialGroup()
-                        .addGap(263, 263, 263)
-                        .addComponent(Save_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Goal_PlannerLayout.createSequentialGroup()
                         .addGap(354, 354, 354)
                         .addGroup(Goal_PlannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Goal_PlannerLayout.createSequentialGroup()
@@ -268,8 +294,13 @@ public class Goal_Planner extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel5)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(Goal_PlannerLayout.createSequentialGroup()
+                .addGap(234, 234, 234)
+                .addComponent(Save_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         Goal_PlannerLayout.setVerticalGroup(
             Goal_PlannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,9 +333,9 @@ public class Goal_Planner extends javax.swing.JFrame {
                 .addGroup(Goal_PlannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(charCountLabel))
-                .addGap(6, 6, 6)
+                .addGap(2, 2, 2)
                 .addComponent(Save_Button)
-                .addGap(14, 14, 14)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -341,6 +372,9 @@ public class Goal_Planner extends javax.swing.JFrame {
                 }
             }
         });
+        //Enable sorting
+        TableRowSorter<TableModel> sorter1 = new TableRowSorter<TableModel>(jTable2.getModel());
+        jTable2.setRowSorter(sorter1);
         jTable2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         jDateChooser2.setDateFormatString("dd/MM/yyyy");
@@ -431,7 +465,8 @@ public class Goal_Planner extends javax.swing.JFrame {
         jLabel12.setText("Character Count:");
 
         Update_Button.setFont(Update_Button.getFont().deriveFont(Update_Button.getFont().getStyle() | java.awt.Font.BOLD, 16));
-        Update_Button.setText("🔄 Update");
+        Update_Button.setIcon(new javax.swing.ImageIcon("icons/icons8-update-48.png"));
+        Update_Button.setText("Update");
         Update_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Update_ButtonActionPerformed(evt);
@@ -439,7 +474,8 @@ public class Goal_Planner extends javax.swing.JFrame {
         });
 
         Delete_Button.setFont(Delete_Button.getFont().deriveFont(Delete_Button.getFont().getStyle() | java.awt.Font.BOLD, 16));
-        Delete_Button.setText("❌️ Delete");
+        Delete_Button.setIcon(new javax.swing.ImageIcon("icons/icons8-cross-mark-48.png"));
+        Delete_Button.setText("Delete");
         Delete_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Delete_ButtonActionPerformed(evt);
@@ -484,9 +520,9 @@ public class Goal_Planner extends javax.swing.JFrame {
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Update_Button)
-                        .addGap(40, 40, 40)
+                        .addGap(30, 30, 30)
                         .addComponent(Delete_Button)
-                        .addGap(57, 57, 57))))
+                        .addGap(31, 31, 31))))
         );
         Edit_GoalsLayout.setVerticalGroup(
             Edit_GoalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -524,8 +560,8 @@ public class Goal_Planner extends javax.swing.JFrame {
                     .addGroup(Edit_GoalsLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(Edit_GoalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Update_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Delete_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Update_Button)
+                            .addComponent(Delete_Button))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(Edit_GoalsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
@@ -535,44 +571,222 @@ public class Goal_Planner extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Edit Goals", Edit_Goals);
 
-        javax.swing.GroupLayout Progress_ViewerLayout = new javax.swing.GroupLayout(Progress_Viewer);
-        Progress_Viewer.setLayout(Progress_ViewerLayout);
-        Progress_ViewerLayout.setHorizontalGroup(
-            Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 702, Short.MAX_VALUE)
-        );
-        Progress_ViewerLayout.setVerticalGroup(
-            Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
-        );
+        jTable3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTable3.setModel(GoalDBCreator.model);
+        jTable3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane5.setViewportView(jTable3);
+        DialogCellRenderer.Tooltip_setter(jTable3);
+        jTable3.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                rowIndex = jTable3.getSelectedRow();
+                String style1 = "<html><font color='green' size='6'>&bull;</font> In Progress</html>";
+                String style2 = "<html><font color='green' size='6'>&bull;</font> Complete</html>";
+                String style3 = "<html><font color='red' size='6'>&bull;</font> Past Due</html>";
+                if (rowIndex != -1){// Make sure a row is selected
+                    selectedDate = jTable3.getValueAt(rowIndex, 3).toString();
+                    targetAmount = Integer.parseInt(jTable3.getValueAt(rowIndex, 2).toString()); // get the String value of the target amount
+                    //selecting column's valuses to prepare for Complete button actionperforme
+                    value1 = jTable3.getValueAt(rowIndex, 0).toString();
+                    value2 = jTable3.getValueAt(rowIndex, 1).toString();
+                    value3 = jTable3.getValueAt(rowIndex, 2).toString();
+                    value4 = jTable3.getValueAt(rowIndex, 3).toString();
+                    value5 = jTable3.getValueAt(rowIndex, 4).toString();
+                }
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = null;
+                try {
+                    date = dateFormat.parse(selectedDate);
+                } catch (ParseException e) {
+                    System.out.println("Date conversion error");
+                }
+                boolean pastDue = DateComparator.is_pastdue(date);
+                jProgressBar1.setMaximum(targetAmount);
+                jProgressBar1.setValue(total);
+                jProgressBar1.setStringPainted(true);
+                if(total >= targetAmount){
+                    jButton1.setEnabled(true);
+                    jProgressBar1.setString("100%");
+                    jLabel15.setText(style2);
+                    if(pastDue == true)
+                    jLabel15.setText(style3);
+                }
 
-        jTabbedPane1.addTab("Progress Viewer", Progress_Viewer);
+                else{
+                    jButton1.setEnabled(false);
+                    jProgressBar1.setString((double)total/targetAmount+"%");
+                    if(pastDue == true)
+                    jLabel15.setText(style3);
+                    else
+                    jLabel15.setText(style1);
+                }
+            }});
+            //Enable sorting
+            TableRowSorter<TableModel> sorter2 = new TableRowSorter<TableModel>(jTable3.getModel());
+            jTable3.setRowSorter(sorter2);
+            jTable3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        jTabbedPane1.setSelectedIndex(1);
+            jProgressBar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+            jProgressBar1.setForeground(new java.awt.Color(1, 35, 69));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-        );
+            jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+            jLabel13.setText("Progress:");
 
-        jTabbedPane1.setTabComponentAt(0, jPanel5);
-        jTabbedPane1.setEnabledAt(0, false);
+            jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+            jLabel14.setText("Status:");
 
-        setSize(new java.awt.Dimension(715, 467));
-        setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+            jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+            jLabel15.setText(" ");
+
+            jButton1.setFont(jButton1.getFont().deriveFont(jButton1.getFont().getStyle() | java.awt.Font.BOLD, jButton1.getFont().getSize()+4));
+            jButton1.setIcon(new javax.swing.ImageIcon("icons/icons8-done-48.png"));
+            jButton1.setText("Complete");
+            jButton1.setEnabled(false);
+            jButton1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton1ActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout Progress_ViewerLayout = new javax.swing.GroupLayout(Progress_Viewer);
+            Progress_Viewer.setLayout(Progress_ViewerLayout);
+            Progress_ViewerLayout.setHorizontalGroup(
+                Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Progress_ViewerLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane5)
+                        .addGroup(Progress_ViewerLayout.createSequentialGroup()
+                            .addGroup(Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(Progress_ViewerLayout.createSequentialGroup()
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(353, 353, 353))
+                                .addGroup(Progress_ViewerLayout.createSequentialGroup()
+                                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(91, 91, 91)))
+                            .addGroup(Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(Progress_ViewerLayout.createSequentialGroup()
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(29, 29, 29))
+                                .addGroup(Progress_ViewerLayout.createSequentialGroup()
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                    .addGap(92, 92, 92)))))
+                    .addContainerGap())
+            );
+            Progress_ViewerLayout.setVerticalGroup(
+                Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Progress_ViewerLayout.createSequentialGroup()
+                    .addGap(26, 26, 26)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel13)
+                        .addComponent(jLabel14)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(Progress_ViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(60, 60, 60))
+            );
+
+            jTabbedPane1.addTab("Progress Viewer", Progress_Viewer);
+
+            jTable4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+            jTable4.setModel(GoalDBCreator.compModel);
+            jTable4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            jScrollPane6.setViewportView(jTable4);
+            DialogCellRenderer.Tooltip_setter(jTable4);
+            jTable4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent event) {
+                    rowIndex = jTable4.getSelectedRow();
+                    if (rowIndex != -1){// Make sure a row is selected
+                        //selecting column's valuses to prepare for Complete button actionperforme
+                        value1 = jTable4.getValueAt(rowIndex, 0).toString();
+                        value2 = jTable4.getValueAt(rowIndex, 1).toString();
+                        value3 = jTable4.getValueAt(rowIndex, 2).toString();
+                        value4 = jTable4.getValueAt(rowIndex, 3).toString();
+                    }
+                }});
+                //Enable sorting
+                TableRowSorter<TableModel> sorter3 = new TableRowSorter<TableModel>(jTable4.getModel());
+                jTable4.setRowSorter(sorter3);
+                jTable4.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+                jButton2.setFont(jButton2.getFont().deriveFont(jButton2.getFont().getStyle() | java.awt.Font.BOLD, jButton2.getFont().getSize()+4));
+                jButton2.setIcon(new javax.swing.ImageIcon("icons/icons8-cross-mark-48.png"));
+                jButton2.setText("Delete");
+                jButton2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton2ActionPerformed(evt);
+                    }
+                });
+
+                jButton3.setFont(jButton3.getFont().deriveFont(jButton3.getFont().getStyle() | java.awt.Font.BOLD, jButton3.getFont().getSize()+4));
+                jButton3.setIcon(new javax.swing.ImageIcon("icons/icons8-trash-48.png"));
+                jButton3.setText("Clear All");
+                jButton3.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton3ActionPerformed(evt);
+                    }
+                });
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(104, 104, 104)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(75, 75, 75))
+                );
+                jPanel1Layout.setVerticalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72))
+                );
+
+                jTabbedPane1.addTab("Completed Goals", jPanel1);
+
+                jTabbedPane1.setSelectedIndex(1);
+
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                );
+
+                jTabbedPane1.setTabComponentAt(0, jPanel5);
+                jTabbedPane1.setEnabledAt(0, false);
+
+                setSize(new java.awt.Dimension(716, 467));
+                setLocationRelativeTo(null);
+            }// </editor-fold>//GEN-END:initComponents
 
     private void Save_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_ButtonActionPerformed
         boolean valid = true;
         //new border for invalid inputs
         Border border = BorderFactory.createLineBorder(Color.RED, 2, true);
-        
         if(Check_Input.checkEmpty(jTextField1.getText())){
             valid = false;
             jTextField1.setBorder(border);
@@ -611,19 +825,13 @@ public class Goal_Planner extends javax.swing.JFrame {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String Date = dateFormat.format(javaDate);
             //insert data to the database and jTable
-            try {
-                GoalDBCreator.Insert_Data(
-                        GoalDBCreator.id,
-                        jTextField1.getText(),
-                        String.valueOf(jComboBox1.getSelectedItem()),
-                        jTextField2.getText(),
-                        Date,
-                        jTextArea1.getText());
-            } catch (SQLException e) {
-                System.out.println("Data Insertion has failed");
-                JOptionPane.showMessageDialog(null, "Database insertion error", "Warning", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            GoalDBCreator.Insert_Data(
+                    GoalDBCreator.id,
+                    jTextField1.getText(),
+                    String.valueOf(jComboBox1.getSelectedItem()),
+                    jTextField2.getText(),
+                    Date,
+                    jTextArea1.getText());
             //add new row to Table model
             GoalDBCreator.model.addRow( new Object[]{
                                         jTextField1.getText(),
@@ -633,7 +841,7 @@ public class Goal_Planner extends javax.swing.JFrame {
                                         jTextArea1.getText()});
             //notify the jTable with the changes made in the Table model
             GoalDBCreator.model.fireTableDataChanged();
-            //rest the feilds after Save process
+            //reset the feilds after Save process
             Reset_Components.Reset_feilds(jTextField1, jTextField2, jTextArea1, jComboBox1, jDateChooser1);
         }
             
@@ -675,7 +883,7 @@ public class Goal_Planner extends javax.swing.JFrame {
         if(rowIndex != -1){
             boolean valid = true;
             //new border for invalid inputs
-            Border border = BorderFactory.createLineBorder(Color.RED, 2, true);
+            Border border = BorderFactory.createLineBorder(Color.RED, 2);
 
             if(Check_Input.checkEmpty(jTextField3.getText())){
                 valid = false;
@@ -715,33 +923,27 @@ public class Goal_Planner extends javax.swing.JFrame {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String Date = dateFormat.format(javaDate);
                 //Update data and save it to the database and jTable
-                try {
-                    GoalDBCreator.Update_Data(
-                            GoalDBCreator.id,
-                            value1,
-                            value2,
-                            value3,
-                            value4,
-                            value5,
-                            jTextField3.getText(),
-                            String.valueOf(jComboBox2.getSelectedItem()),
-                            jTextField4.getText(),
-                            Date,
-                            jTextArea2.getText());
-                } catch (SQLException e) {
-                    System.out.println("Data Update has failed");
-                    JOptionPane.showMessageDialog(null, "Database Update error", "Warning", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                GoalDBCreator.Update_Data(
+                        GoalDBCreator.id,
+                        value1,
+                        value2,
+                        value3,
+                        value4,
+                        value5,
+                        jTextField3.getText(),
+                        String.valueOf(jComboBox2.getSelectedItem()),
+                        jTextField4.getText(),
+                        Date,
+                        jTextArea2.getText());
                 // Set the new data for the row in the table model.
                 GoalDBCreator.model.setValueAt(jTextField3.getText(), rowIndex, 0);
                 GoalDBCreator.model.setValueAt(String.valueOf(jComboBox2.getSelectedItem()), rowIndex, 1);
                 GoalDBCreator.model.setValueAt(jTextField4.getText(), rowIndex, 2);
                 GoalDBCreator.model.setValueAt(Date, rowIndex, 3);
                 GoalDBCreator.model.setValueAt(jTextArea2.getText(), rowIndex, 4);
-                // Call the fireTableDataChanged() method to notify the JTable that the data has changed.
+                // Call the fireTableDataChanged() method to notify the JTable with the data that has changed.
                 GoalDBCreator.model.fireTableDataChanged();
-                //rest the feilds after Update process
+                //reset the feilds after Update process
                 Reset_Components.Reset_feilds(jTextField3, jTextField4, jTextArea2, jComboBox2, jDateChooser2);
                 }
         }
@@ -769,28 +971,70 @@ public class Goal_Planner extends javax.swing.JFrame {
                 GoalDBCreator.model.removeRow(rowIndex);
                 GoalDBCreator.model.fireTableDataChanged();
                 Date javaDate = jDateChooser2.getDate();
-                //rest the feilds after Deletion process
+                //reset the feilds after Deletion process
                 Reset_Components.Reset_feilds(jTextField3, jTextField4, jTextArea2, jComboBox2, jDateChooser2);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String Date = dateFormat.format(javaDate);
-                try {
-                    GoalDBCreator.Delete_Data(
+                GoalDBCreator.Delete_Data(
                             GoalDBCreator.id,
                             value1,
                             value2,
                             value3,
                             value4,
                             value5);
-                } catch (SQLException e) {
-                    System.out.println("Data Deletion has failed");
-                    JOptionPane.showMessageDialog(null, "Database Deletion error", "Warning", JOptionPane.ERROR_MESSAGE);
-                }
                 }
             else if (result == JOptionPane.NO_OPTION){}
         }
         else
             JOptionPane.showMessageDialog(null, "No Data has been selected", "Warning", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_Delete_ButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(rowIndex != -1)
+        {
+            // Show a JOptionPane with custom buttons
+            int result = JOptionPane.showConfirmDialog (null, "Do you want to Complete this goal", "Confirmation Question", JOptionPane.YES_NO_OPTION);
+            //Actions performed based on User's choice
+            if (result == JOptionPane.YES_OPTION) {
+                GoalDBCreator.model.removeRow(rowIndex);
+                GoalDBCreator.model.fireTableDataChanged();
+                Object[] row = {value1,value2,value3,value4};
+                GoalDBCreator.compModel.addRow(row);
+                GoalDBCreator.compModel.fireTableDataChanged();
+                GoalDBCreator.Complete_Data(
+                        GoalDBCreator.id,
+                        value1,
+                        value2,
+                        value3,
+                        value4,
+                        value5);
+                //remove the goal's amount from the total net amount
+                total -= targetAmount;
+                }
+            else if (result == JOptionPane.NO_OPTION){}
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        GoalDBCreator.DeleteComp_Data(
+                            GoalDBCreator.id,
+                            value1,
+                            value2,
+                            value3,
+                            value4);
+        GoalDBCreator.compModel.removeRow(rowIndex);
+        GoalDBCreator.compModel.fireTableDataChanged();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        GoalDBCreator.ClearComp_Data(GoalDBCreator.id);
+        int rowCount = GoalDBCreator.compModel.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+        GoalDBCreator.compModel.removeRow(i);
+        }
+        GoalDBCreator.compModel.fireTableDataChanged();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -817,6 +1061,9 @@ public class Goal_Planner extends javax.swing.JFrame {
     private javax.swing.JButton Update_Button;
     private javax.swing.JLabel charCountLabel;
     private javax.swing.JLabel charCountLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -825,6 +1072,9 @@ public class Goal_Planner extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -833,14 +1083,20 @@ public class Goal_Planner extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private static javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
