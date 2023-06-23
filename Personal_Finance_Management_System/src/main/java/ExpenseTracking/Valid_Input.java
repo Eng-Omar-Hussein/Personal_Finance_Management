@@ -17,11 +17,18 @@ public static boolean valid_amount(String amount){
     
             for (int i = 0; i < amount.length(); i++) 
             {
-            if(!amount.contains("$"))
+            if(!Character.isDigit(amount.charAt(i)))
                 return false;
             }
     return true;
     
 }
+    public static boolean checkEmpty(String input)
+    {
+            //return true empty
+            if(input.equals(""))
+                return true;
+            else return false;
+    }
 
 }

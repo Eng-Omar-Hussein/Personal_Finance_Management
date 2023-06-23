@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -41,9 +42,9 @@ public class Expensetracking extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -84,7 +85,7 @@ public class Expensetracking extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(25, 167, 206));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,10 +97,10 @@ public class Expensetracking extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("expense tracking");
 
-        jButton2.setBackground(new java.awt.Color(255, 0, 0));
+        jButton2.setBackground(new java.awt.Color(25, 167, 206));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\asmaa\\Downloads\\icons8-update-50.png")); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon("icons/icons8-update-50.png"));
         jButton2.setText("update");
         jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -108,22 +109,10 @@ public class Expensetracking extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 0, 0));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\asmaa\\Downloads\\icons8-add-50.png")); // NOI18N
-        jButton4.setText("new expense");
-        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setBackground(new java.awt.Color(255, 0, 0));
+        jButton5.setBackground(new java.awt.Color(25, 167, 206));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setIcon(new javax.swing.ImageIcon("C:\\Users\\asmaa\\Downloads\\icons8-close-window-50.png")); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon("icons/icons8-close-window-50.png"));
         jButton5.setText("exit");
         jButton5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -132,15 +121,27 @@ public class Expensetracking extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setBackground(new java.awt.Color(25, 167, 206));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\asmaa\\Downloads\\icons8-back-48.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("icons/icons8-back-48.png"));
         jButton1.setText("back");
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(25, 167, 206));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon("icons/icons8-search-60.png"));
+        jButton3.setText("search");
+        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -154,12 +155,13 @@ public class Expensetracking extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(58, 58, 58)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jTextField1)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)))))
                 .addContainerGap(78, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -171,63 +173,66 @@ public class Expensetracking extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97)
-                .addComponent(jButton4)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addComponent(jButton2)
-                .addGap(40, 40, 40)
+                .addGap(48, 48, 48)
                 .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(135, 135, 135))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField2.setBackground(new java.awt.Color(255, 0, 0));
+        jTextField2.setBackground(new java.awt.Color(25, 167, 206));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\asmaa\\Documents\\NetBeansProjects\\Personal_Finance_Management-main\\Personal_Finance_Management_System\\icons\\icons8-expenses-64 (1).png")); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(25, 167, 206));
+        jLabel1.setIcon(new javax.swing.ImageIcon("icons/icons8-us-dollar-circled-50 (3).png"));
         jLabel1.setText("Add Expenses ");
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setForeground(new java.awt.Color(25, 167, 206));
         jLabel3.setText("name of expense : ");
 
         name.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         name.setToolTipText("like food , salary , etc");
-        name.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 3, true));
+        name.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 167, 206), 3, true));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(25, 167, 206));
         jLabel4.setText("amount : ");
 
         amount.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        amount.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 3, true));
+        amount.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 167, 206), 3, true));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel5.setForeground(new java.awt.Color(25, 167, 206));
         jLabel5.setText("date : ");
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setForeground(new java.awt.Color(25, 167, 206));
         jLabel7.setText("description : ");
 
         description.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        description.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 3, true));
+        description.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 167, 206), 3, true));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel8.setForeground(new java.awt.Color(25, 167, 206));
         jLabel8.setText("category : ");
 
-        category.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "category", "food", "house", "investment", "entertainment", "custom" }));
-        category.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 2, true));
+        category.setEditable(true);
+        category.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        category.setForeground(new java.awt.Color(0, 0, 204));
+        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "food", "house", "investment", "entertainment", "custom" }));
+        category.setSelectedIndex(-1);
+        category.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 167, 206), 2, true));
         category.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categoryActionPerformed(evt);
@@ -236,14 +241,14 @@ public class Expensetracking extends javax.swing.JFrame {
 
         add_btn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         add_btn.setText("add");
-        add_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 2, true));
+        add_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 167, 206), 2, true));
         add_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 add_btnActionPerformed(evt);
             }
         });
 
-        jDateChooser1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 2, true));
+        jDateChooser1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 167, 206), 2, true));
         jDateChooser1.setToolTipText("date");
         jDateChooser1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
@@ -253,11 +258,6 @@ public class Expensetracking extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -283,8 +283,13 @@ public class Expensetracking extends javax.swing.JFrame {
                                         .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(category, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(2, 2, 2)))))
-                .addContainerGap(190, Short.MAX_VALUE))
+                                .addGap(2, 2, 2))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,7 +318,7 @@ public class Expensetracking extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(add_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -323,9 +328,10 @@ public class Expensetracking extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,19 +360,15 @@ public class Expensetracking extends javax.swing.JFrame {
     }//GEN-LAST:event_categoryActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    this.dispose();
+ this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    Menu_Page Obj = new Menu_Page();
-        this.dispose();
+   
+         Menu_Page obj=new Menu_Page();
+         this.dispose();
+                 
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    
-        
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void add_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_btnActionPerformed
         if(evt.getSource()==add_btn){
@@ -375,27 +377,29 @@ public class Expensetracking extends javax.swing.JFrame {
 
                 System.out.println("connected");
             }
+            
             catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
+           
             if(!Valid_Input.valid_name(name.getText())){
            JOptionPane.showMessageDialog(null,"name cannot have a number","error",JOptionPane.WARNING_MESSAGE);
             }
-            if(!Valid_Input.valid_amount(amount.getText())){
-           JOptionPane.showMessageDialog(null,"amount dont have a $","error",JOptionPane.WARNING_MESSAGE);
+            else if(!Valid_Input.valid_amount(amount.getText())){
+           JOptionPane.showMessageDialog(null,"amount must not have a letter","error",JOptionPane.WARNING_MESSAGE);
             }
+           else if(Valid_Input.checkEmpty(name.getText())||Valid_Input.checkEmpty(amount.getText())||Valid_Input.checkEmpty((String) category.getSelectedItem()))
+              JOptionPane.showMessageDialog(null,"input cant be empty","error",JOptionPane.WARNING_MESSAGE);  
             else{
-            SimpleDateFormat ss=new SimpleDateFormat("dd-mm-yyyy");
+            
+            try{   SimpleDateFormat ss=new SimpleDateFormat("yyyy-MM-dd");
             String date=ss.format(jDateChooser1.getDate());
-            try{  
                 ConnectionToDB.Insert_Data(Cookies.getID(),
                     name.getText(),
                     String.valueOf(category.getSelectedItem()),
                     amount.getText(),
                     date, description.getText());
-                show_data obj=new show_data();
-                this.dispose();
-                
+                JOptionPane.showMessageDialog(null, "the data is added successfully", "personal finance managment", JOptionPane.INFORMATION_MESSAGE);
             }
             catch(SQLException ex){
                 System.out.println(ex.getMessage());
@@ -403,6 +407,18 @@ public class Expensetracking extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_add_btnActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         if(evt.getSource()==jButton3){
+            try{
+                search a=new search();
+                this.dispose();
+            }catch(Exception e){
+
+                System.out.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -446,7 +462,7 @@ public class Expensetracking extends javax.swing.JFrame {
     private javax.swing.JTextField description;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;

@@ -11,13 +11,13 @@ import User_Authentication.Cookies;
  * @author asmaa
  */
 public class expense_varibles {
+
   private int id=Cookies.getID();
    private String name;
    private String amount;
    private String category;
    private String date;
    private String descriptipon;
-
     public expense_varibles() {
     }
 
