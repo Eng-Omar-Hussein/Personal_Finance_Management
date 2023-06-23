@@ -38,7 +38,7 @@ public class DialogCellRenderer {
                 //Compare between the width of the column and the length of the text in jTable cell
                 //if text is longer than the Column's width Tooltip text will be activated 
                 if ((textWidth+5) > tableColumn.getWidth())
-                    label.setToolTipText("<html><div style='width:200px;font-size:10px;font-weight:bold;'>" + text.replaceAll("\n", "<br/>") + "</div></html>");
+                    label.setToolTipText("<html><div style='width:200px;font-size:11px;font-weight:bold;'>" + text.replaceAll("\n", "<br/>") + "</div></html>");
                 else
                     label.setToolTipText(null);
                 return label;

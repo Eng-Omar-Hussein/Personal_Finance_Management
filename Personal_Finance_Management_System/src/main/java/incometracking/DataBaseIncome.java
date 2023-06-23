@@ -41,6 +41,5 @@ public class DataBaseIncome {
             return true;
         }
         return false;
-    }
-    
+    } 
 }
