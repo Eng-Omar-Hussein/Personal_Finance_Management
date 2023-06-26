@@ -1,6 +1,7 @@
 package com.mycompany.personal_finance_management_system;
 
-import Budget_planner.Main_Budget;
+import Budget_Planner_New.Main_Budget;
+import ExpenseTracking.Expensetracking;
 import Goal_Setting.Goal_Planner;
 import User_Authentication.Login_Page;
 import User_Authentication.My_Account;
@@ -261,6 +262,7 @@ public class Menu_Page extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         Main_Budget obj = new Main_Budget();
+        obj.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -275,7 +277,8 @@ public class Menu_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5MouseEntered
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Expensetracking obj = new Expensetracking();
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited

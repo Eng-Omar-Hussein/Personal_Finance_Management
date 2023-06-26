@@ -1,17 +1,5 @@
 package User_Authentication;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 public class DataValidation {
 
     public static int verificationCode;
@@ -94,7 +82,7 @@ public class DataValidation {
         return phone.length() == 11 && s.equals("01");
     }
 
-    private static boolean hasUpperCase(String first) {
+    public static boolean hasUpperCase(String first) {
         for (int i = 0; i < first.length(); i++) {
             if (Character.isUpperCase(first.charAt(i))) {
                 return true;
@@ -103,7 +91,7 @@ public class DataValidation {
         return false;
     }
 
-    private static boolean hasDigit(String first) {
+    public static boolean hasDigit(String first) {
         for (int i = 0; i < first.length(); i++) {
             if (Character.isDigit(first.charAt(i))) {
                 return true;
@@ -112,7 +100,7 @@ public class DataValidation {
         return false;
     }
 
-    private static boolean hasWhitespace(String first) {
+    public static boolean hasWhitespace(String first) {
         for (int i = 0; i < first.length(); i++) {
             if (Character.isWhitespace(first.charAt(i))) {
                 return true;
@@ -121,7 +109,7 @@ public class DataValidation {
         return false;
     }
 
-    private static boolean hasLowerCase(String password) {
+    public static boolean hasLowerCase(String password) {
         for (int i = 0; i < password.length(); i++) {
             if (Character.isLowerCase(password.charAt(i))) {
                 return true;
@@ -135,40 +123,4 @@ public class DataValidation {
         return verificationCode;
     }
 
-    public static void sendCode(String to) {
-        String email = "personalfinanc1@gmail.com";
-        String password = "azuftxblyagjmmyo";
-        // Set up the properties for the SMTP server
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        // Set up the session
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(email, password);
-            }
-        });
-
-        try {
-            // Set up the email message
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(email, "PFMS"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            message.setSubject("Your PFMS verification code");
-            message.setText("Your PFMS verification code is " + generateRandom() + "\nThis code will expire in 24 hours or when you request another code.");
-            // Send the email
-            Transport.send(message);
-
-            System.out.println("Email sent successfully.");
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(DataValidation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }
