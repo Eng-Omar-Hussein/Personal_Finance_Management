@@ -1,78 +1,105 @@
 package Budget_Planner_New;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import static Budget_Planner_New.BudgetIncome.id;
+import ExpenseTracking.ConnectionToDB;
+import ExpenseTracking.Expensetracking;
+import User_Authentication.Cookies;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class BudgetExpense extends javax.swing.JFrame {
-    public static final int id=1;
-    ArrayList<income_var> list1=new ArrayList<>();
+
+    public static final int id = Cookies.getID();
     public static int numOfRow;
+    HashMap<String, Integer> map = new HashMap<>();
+
     //constructor
-    public BudgetExpense() {
+    public BudgetExpense() throws SQLException {
         initComponents();
-        
+        Connection conn = null;
+        PreparedStatement pre = null;
+        ResultSet r = null;
+
         try {
-            createTable();
-            showFromDB("","");
+            //get catogery and amount from db of expense and show all category in combobox
+            conn = DriverManager.getConnection("jdbc:sqlite:expense.db");
+            pre = conn.prepareStatement("select * from Expense where id =" + id);
+            r = pre.executeQuery();
+            ArrayList<String> array = new ArrayList<>();
+            while (r.next()) {
+
+                if (map.containsKey(r.getString("category"))) {
+                    int OldAmount = map.get(r.getString("category"));
+                    map.put(r.getString("category"), OldAmount + r.getInt("amount"));
+
+                } else {
+                    map.put(r.getString("category"), r.getInt("amount"));
+
+                    array.add(r.getString("category"));
+
+                }
+
+            }
+            for (int i = 0; i < array.size(); i++) {
+                jComboBox1.addItem(array.get(i));
+
+                System.out.println(array.get(i));
+            }
+
+            if (createTable()) {
+                showFromDB("", "");
+            }
+
         } catch (SQLException ex) {
-            Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        } finally {
+            conn.close();
+            pre.close();
+            r.close();
         }
-        income_var ob1=new income_var("Food", 500);
-        list1.add(ob1);
-        income_var ob2=new income_var("Gifts", 300);
-        list1.add(ob2);
-        income_var ob3=new income_var("Health", 1000);
-        list1.add(ob3);
-        income_var ob4=new income_var("Home", 200);
-        list1.add(ob4);   
-        income_var ob5=new income_var("Transportation", 200);
-        list1.add(ob5);   
-        
+        jComboBox1.setSelectedIndex(-1);
+        lbl_Actual.setText("");
     }
-    
+
     // method to add income values to table
-    public void addIncomeToTable(){
-        
-        SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
-        String catogeryDate=format.format(jDateChooser1.getDate());
-        String catogeryName=jComboBox1.getSelectedItem().toString();
-        Integer catogeryActual=Integer.parseInt(lbl_Actual.getText());
-        Integer catogeryPlanned=Integer.parseInt(txt_Planned.getText());
+    public void addIncomeToTable() {
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String catogeryDate = format.format(jDateChooser1.getDate());
+        String catogeryName = jComboBox1.getSelectedItem().toString();
+        Integer catogeryActual = Integer.parseInt(lbl_Actual.getText());
+        Integer catogeryPlanned = Integer.parseInt(txt_Planned.getText());
         //String catogeryDate=txt_Date.getText();
-        String catogeryDiscription=txt_Discription.getText();
-        
-        DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
-        Object obj[]=new Object[6];
-        obj[0]=catogeryName;
-        obj[1]=catogeryPlanned;
-        obj[2]=catogeryActual;
-        obj[3]=catogeryPlanned-catogeryActual;
-        obj[4]=catogeryDiscription;
-        obj[5]=catogeryDate;
+        String catogeryDiscription = txt_Discription.getText();
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Object obj[] = new Object[6];
+        obj[0] = catogeryName;
+        obj[1] = catogeryPlanned;
+        obj[2] = catogeryActual;
+        obj[3] = catogeryPlanned - catogeryActual;
+        obj[4] = catogeryDiscription;
+        obj[5] = catogeryDate;
         model.addRow(obj);
-        
+
     }
-    
+
     // method to create expense table 
-    public boolean createTable() throws SQLException{
-        boolean flag=false;
-        Connection con=null;
-        
-        try{
-            con=ConnectionDataBase.connect();
-            String sql="CREATE TABLE IF NOT EXISTS Expense_"+id+"("
+    public boolean createTable() throws SQLException {
+        boolean flag = false;
+        Connection con = null;
+
+        try {
+            con = ConnectionDataBase.connect();
+            String sql = "CREATE TABLE IF NOT EXISTS Expense_" + id + "("
                     + "row integer,"
                     + "name TEXT,"
                     + "planned INTEGER NOT NULL,"
@@ -84,85 +111,85 @@ public class BudgetExpense extends javax.swing.JFrame {
             Statement stmt = con.createStatement();
             stmt.execute(sql);
             return true;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             con.close();
-            
+
         }
         return flag;
     }
-    
+
     // method to add income values to db
-    public boolean addIncomeToDB() throws SQLException{
-        boolean flag=false;
-            Connection con=null;
-            PreparedStatement pre=null;
-            String catogeryName=jComboBox1.getSelectedItem().toString();
-            int catogeryActual=Integer.parseInt(lbl_Actual.getText());
-            int catogeryPlanned=Integer.parseInt(txt_Planned.getText());
-            SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
-            String catogeryDate=format.format(jDateChooser1.getDate());
-            String catogeryDiscription=txt_Discription.getText();
-        
+    public boolean addIncomeToDB() throws SQLException {
+        boolean flag = false;
+        Connection con = null;
+        PreparedStatement pre = null;
+        String catogeryName = jComboBox1.getSelectedItem().toString();
+        int catogeryActual = Integer.parseInt(lbl_Actual.getText());
+        int catogeryPlanned = Integer.parseInt(txt_Planned.getText());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String catogeryDate = format.format(jDateChooser1.getDate());
+        String catogeryDiscription = txt_Discription.getText();
+
         try {
-            if(createTable()){
-                con=ConnectionDataBase.connect();
-                pre=con.prepareStatement("INSERT INTO Expense_"+id+" values(?,?,?,?,?,?,?)");
-                
-                pre.setInt(1, getlastNumOfRow()+1);
+            if (createTable()) {
+                con = ConnectionDataBase.connect();
+                pre = con.prepareStatement("INSERT INTO Expense_" + id + " values(?,?,?,?,?,?,?)");
+
+                //get max row in db
+                pre.setInt(1, getlastNumOfRow() + 1);
                 pre.setString(2, catogeryName);
                 pre.setInt(3, catogeryPlanned);
                 pre.setInt(4, catogeryActual);
-                pre.setInt(5, catogeryPlanned-catogeryActual);
+                pre.setInt(5, catogeryPlanned - catogeryActual);
                 pre.setString(6, catogeryDate);
                 pre.setString(7, catogeryDiscription);
-                int num=pre.executeUpdate();
-                if(num>0){
-                    flag=true;
-                }else{
-                    flag=false;
+                int num = pre.executeUpdate();
+                if (num > 0) {
+                    flag = true;
+                } else {
+                    flag = false;
                 }
-            }else{
-                System.out.println("falid to create table 1");
+            } else {
+                System.out.println("falid to create tablel");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             pre.close();
             con.close();
-            
+
         }
         return flag;
     }
-    
-    // method to show all values in DB to income table
-    public void showFromDB(String s1,String s2) throws SQLException{
-        Connection con=null;
-        PreparedStatement pre=null;
-        ResultSet r=null;
-        try{
-        ArrayList<BudgetData>list=new ArrayList<>();
-        Object []object=new Object[6];
-        DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
-        
-        con=ConnectionDataBase.connect();
-        if(s1.equals("") && s2.equals("")){
-            System.out.println("11");
-            pre=con.prepareStatement("select * from Expense_"+id);
-        }else{
-            pre=con.prepareStatement("select * from Expense_"+id+" where date between ? and ?");
-            pre.setString(1, s1);
-            pre.setString(2, s2);
-           
-        }
-        r=pre.executeQuery();
-        while(r.next()){
-            list.add(new BudgetData(r.getString("name"), r.getInt("Planned"),r.getInt("actual"),r.getInt("diff"),r.getString("date"),r.getString("discription")));
 
-        }
+    // method to show all values in DB to income table between date start and end
+    public void showFromDB(String start, String end) throws SQLException {
+        Connection con = null;
+        PreparedStatement pre = null;
+        ResultSet r = null;
+        try {
+            ArrayList<BudgetData> list = new ArrayList<>();
+            Object[] object = new Object[6];
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            con = ConnectionDataBase.connect();
+
+            if (start.equals("") && end.equals("")) {
+                pre = con.prepareStatement("select * from Expense_" + id);
+            } else {
+                pre = con.prepareStatement("select * from Expense_" + id + " where date between ? and ?");
+                pre.setString(1, start);
+                pre.setString(2, end);
+
+            }
+            r = pre.executeQuery();
+            while (r.next()) {
+                list.add(new BudgetData(r.getString("name"), r.getInt("Planned"), r.getInt("actual"), r.getInt("diff"), r.getString("date"), r.getString("discription")));
+
+            }
             for (int i = 0; i < list.size(); i++) {
-                 object[0] = list.get(i).getName();
+                object[0] = list.get(i).getName();
                 object[1] = list.get(i).getPlanned();
                 object[2] = list.get(i).getActual();
                 object[3] = list.get(i).getDiff();
@@ -170,126 +197,127 @@ public class BudgetExpense extends javax.swing.JFrame {
                 object[5] = list.get(i).getDate();
                 model.addRow(object);
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }finally{
+        } finally {
             con.close();
             pre.close();
             r.close();
         }
     }
-    
+
     // method to upadte data in DB
-    public void updateDataInDB() throws SQLException{
-        Connection con=null;
-        PreparedStatement pre=null;
-        String catogeryName=jComboBox1.getSelectedItem().toString();
-        int catogeryActual=Integer.parseInt(lbl_Actual.getText());
-        int catogeryPlanned=Integer.parseInt(txt_Planned.getText());
-        SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
-        String catogeryDate=format.format(jDateChooser1.getDate());
-        String catogeryDiscription=txt_Discription.getText();
+    public void updateDataInDB() throws SQLException {
+        Connection con = null;
+        PreparedStatement pre = null;
+        String catogeryName = jComboBox1.getSelectedItem().toString();
+        int catogeryActual = Integer.parseInt(lbl_Actual.getText());
+        int catogeryPlanned = Integer.parseInt(txt_Planned.getText());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String catogeryDate = format.format(jDateChooser1.getDate());
+        String catogeryDiscription = txt_Discription.getText();
         try {
-            con=ConnectionDataBase.connect();
-            pre=con.prepareStatement("UPDATE Expense_"+id+" set name =? , planned =?,actual =?, diff=?, date=?, discription =? where row=?");
+            con = ConnectionDataBase.connect();
+            pre = con.prepareStatement("UPDATE Expense_" + id + " set name =? , planned =?,actual =?, diff=?, date=?, discription =? where row=?");
             pre.setString(1, catogeryName);
             pre.setInt(2, catogeryPlanned);
             pre.setInt(3, catogeryActual);
-            pre.setInt(4, catogeryPlanned-catogeryActual);
+            pre.setInt(4, catogeryPlanned - catogeryActual);
             pre.setString(5, catogeryDate);
             pre.setString(6, catogeryDiscription);
             pre.setInt(7, getNumOfRow());
-            int num=pre.executeUpdate();
-            if(num>0){
+            int num = pre.executeUpdate();
+            if (num > 0) {
                 System.out.println("updated data");
-            }else{
+            } else {
                 System.out.println("faild to update data");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             con.close();
             pre.close();
         }
     }
-    
+
     // method to get num of row in dataBase
-    public int getNumOfRow() throws SQLException{
-        Connection con=null;
-        PreparedStatement pre=null;
-        ResultSet r=null;
-        int Row=0;
-        DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
+    public int getNumOfRow() throws SQLException {
+        Connection con = null;
+        PreparedStatement pre = null;
+        ResultSet r = null;
+        int Row = 0;
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         try {
-            con=ConnectionDataBase.connect();
-            pre=con.prepareStatement("SELECT * FROM Expense_"+id+" where name =?");
-            pre.setString(1,model.getValueAt(selectedRow, 0).toString());
-            r=pre.executeQuery();
-            
-            if(r.next()){
-                Row=r.getInt("row");
+            con = ConnectionDataBase.connect();
+            pre = con.prepareStatement("SELECT * FROM Expense_" + id + " where name =?");
+            pre.setString(1, model.getValueAt(selectedRow, 0).toString());
+            r = pre.executeQuery();
+
+            if (r.next()) {
+                Row = r.getInt("row");
             }
         } catch (SQLException ex) {
             Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             con.close();
             pre.close();
             r.close();
         }
         //System.out.println(Row);
-            return Row;
+        return Row;
     }
-    
-    // method to get last numOfRow in db
-    public int getlastNumOfRow() throws SQLException{
-        Connection con=null;
-        PreparedStatement pre=null;
-        ResultSet r=null;
-        int maxNumOfRow=0;
+
+    // method to get last numOfRow in db and maximize it
+    public int getlastNumOfRow() throws SQLException {
+        Connection con = null;
+        PreparedStatement pre = null;
+        ResultSet r = null;
+        int maxNumOfRow = 0;
         try {
-            con=ConnectionDataBase.connect();
-            pre=con.prepareStatement("select * from income_"+id);
-            r=pre.executeQuery();
-            while(r.next()){
-                maxNumOfRow=Math.max(maxNumOfRow, r.getInt("Row"));
+            con = ConnectionDataBase.connect();
+            pre = con.prepareStatement("select * from expense_" + id);
+            r = pre.executeQuery();
+            while (r.next()) {
+                maxNumOfRow = Math.max(maxNumOfRow, r.getInt("Row"));
+
             }
+            System.out.println(maxNumOfRow);
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             con.close();
             pre.close();
             r.close();
         }
         return maxNumOfRow;
     }
-    
+
     //method to delete row from db
-    public void deleteRow() throws SQLException{
-         Connection con=null;
-        PreparedStatement pre=null;
-        
-        
+    public void deleteRow() throws SQLException {
+        Connection con = null;
+        PreparedStatement pre = null;
+
         try {
-            con=ConnectionDataBase.connect();
-            pre=con.prepareStatement("DELETE FROM Expense_"+id+" WHERE row=?");
-            
+            con = ConnectionDataBase.connect();
+            pre = con.prepareStatement("DELETE FROM Expense_" + id + " WHERE row=?");
+
             pre.setInt(1, getNumOfRow());
-            int num=pre.executeUpdate();
-            if(num>0){
+            int num = pre.executeUpdate();
+            if (num > 0) {
                 System.out.println("Deleted data");
-            }else{
+            } else {
                 System.out.println("faild to Deleted data");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             con.close();
             pre.close();
         }
     }
-    
+
     // reset all fields to null text
-    public void resetAllFields(){
+    public void resetAllFields() {
         jComboBox1.setSelectedIndex(-1);
         txt_Discription.setText("");
         txt_Planned.setText("");
@@ -299,10 +327,35 @@ public class BudgetExpense extends javax.swing.JFrame {
         jDateChooser3.setDate(null);
 
     }
-    
-    
-    
-   
+
+    public Boolean checkInputData() {
+        boolean flag = true;
+        String missing = "You foegot to Enter The Following\n";
+        if (jComboBox1.getSelectedIndex() == -1) {
+            missing += "Category\n";
+            flag = false;
+        }
+        if (txt_Planned.getText().equals("")) {
+            missing += "Planned\n";
+            flag = false;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = jDateChooser1.getDate();
+        if (date == null) {
+            missing += "Date\n";
+            flag = false;
+        }
+        if (txt_Discription.getText().equals("")) {
+            missing += "Discription\n";
+            flag = false;
+        }
+        if (!flag) {
+            JOptionPane.showMessageDialog(null, missing);
+        }
+        System.out.println(flag);
+        return flag;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -343,13 +396,13 @@ public class BudgetExpense extends javax.swing.JFrame {
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(0, 175, 80));
+        jPanel2.setBackground(new java.awt.Color(25, 167, 206));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("BUDGET EXPENSE");
 
-        jLabel13.setBackground(new java.awt.Color(0, 175, 80));
+        jLabel13.setBackground(new java.awt.Color(25, 167, 206));
         jLabel13.setIcon(new javax.swing.ImageIcon("icons/icons8_Rewind_48px.png"));
         jLabel13.setOpaque(true);
         jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -380,32 +433,36 @@ public class BudgetExpense extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 950, 70));
 
-        txt_Discription.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(0, 175, 80)));
-        jPanel1.add(txt_Discription, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 140, -1));
+        txt_Discription.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(25, 167, 206)));
+        jPanel1.add(txt_Discription, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 220, 40));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Catogery Name");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, 30));
 
         jLabel2.setText("Actual");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, -1, 30));
 
         lbl_Actual.setBackground(new java.awt.Color(204, 204, 204));
         lbl_Actual.setOpaque(true);
-        jPanel1.add(lbl_Actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 60, 20));
+        jPanel1.add(lbl_Actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 70, 30));
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Discription");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, 30));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Date");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 30));
 
-        txt_Planned.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(0, 175, 80)));
-        jPanel1.add(txt_Planned, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 140, -1));
+        txt_Planned.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, new java.awt.Color(25, 167, 206)));
+        jPanel1.add(txt_Planned, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 220, 40));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Planned");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, 30));
 
-        lbl_add.setBackground(new java.awt.Color(0, 175, 80));
+        lbl_add.setBackground(new java.awt.Color(25, 167, 206));
         lbl_add.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lbl_add.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_add.setText("Add");
@@ -415,7 +472,7 @@ public class BudgetExpense extends javax.swing.JFrame {
                 lbl_addMouseClicked(evt);
             }
         });
-        jPanel1.add(lbl_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 270, 90, -1));
+        jPanel1.add(lbl_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 90, 30));
 
         jTable1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -447,7 +504,7 @@ public class BudgetExpense extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 910, 240));
 
-        lbl_delete.setBackground(new java.awt.Color(0, 175, 80));
+        lbl_delete.setBackground(new java.awt.Color(25, 167, 206));
         lbl_delete.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lbl_delete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_delete.setText("DELETE");
@@ -457,9 +514,9 @@ public class BudgetExpense extends javax.swing.JFrame {
                 lbl_deleteMouseClicked(evt);
             }
         });
-        jPanel1.add(lbl_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 730, 90, -1));
+        jPanel1.add(lbl_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 730, 90, 30));
 
-        lbl_update.setBackground(new java.awt.Color(0, 175, 80));
+        lbl_update.setBackground(new java.awt.Color(25, 167, 206));
         lbl_update.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lbl_update.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_update.setText("UPDATE");
@@ -469,19 +526,19 @@ public class BudgetExpense extends javax.swing.JFrame {
                 lbl_updateMouseClicked(evt);
             }
         });
-        jPanel1.add(lbl_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 730, 90, -1));
+        jPanel1.add(lbl_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 730, 90, 30));
 
-        jDateChooser1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(0, 175, 80)));
+        jDateChooser1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(25, 167, 206)));
         jDateChooser1.setDateFormatString("dd-MM-yyyy");
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 140, -1));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 220, 30));
 
         jDateChooser2.setDateFormatString("dd-MM-yyyy");
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, 150, -1));
+        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 190, 30));
 
         jDateChooser3.setDateFormatString("dd-MM-yyyy");
-        jPanel1.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 150, -1));
+        jPanel1.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 180, 30));
 
-        jLabel4.setBackground(new java.awt.Color(0, 175, 80));
+        jLabel4.setBackground(new java.awt.Color(25, 167, 206));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Search");
@@ -491,17 +548,15 @@ public class BudgetExpense extends javax.swing.JFrame {
                 jLabel4MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 366, 60, 20));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 366, 60, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Saving", "PayCheck", "Bonus", "Interest", "Other" }));
-        jComboBox1.setSelectedIndex(-1);
-        jComboBox1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(0, 175, 80)));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(25, 167, 206)));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 140, -1));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 143, 220, 30));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -542,32 +597,32 @@ public class BudgetExpense extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbl_addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_addMouseClicked
-        
-        
-        
-        try {
-            addIncomeToTable();
-        
-            if(addIncomeToDB()){
-                System.out.println("added data to db");
-                resetAllFields();
-            }else{
 
-                System.out.println("faild to added data to db");
-            }  
-        } catch (SQLException ex) {
-            Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
+        if (checkInputData()) {
+            try {
+                addIncomeToTable();
+
+                if (addIncomeToDB()) {
+                    System.out.println("added data to db");
+                    resetAllFields();
+                } else {
+                    System.out.println("faild to added data to db");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-       
-        
+
     }//GEN-LAST:event_lbl_addMouseClicked
 
     private void lbl_deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_deleteMouseClicked
         try {
             deleteRow();
-            DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            //after delete specific row from database 
+            //make table is empty then show all thing from beginning
             model.setRowCount(0);
-            showFromDB("","");
+            showFromDB("", "");
             resetAllFields();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -577,70 +632,103 @@ public class BudgetExpense extends javax.swing.JFrame {
     private void lbl_updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_updateMouseClicked
         try {
             updateDataInDB();
-            DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
+            //after update data in database 
+            //set table is empty
+            //and show all thing from beginning
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
-            showFromDB("","");
+            showFromDB("", "");
             resetAllFields();
         } catch (SQLException ex) {
             Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lbl_updateMouseClicked
-    int selectedRow;
+    public int selectedRow;
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        selectedRow=jTable1.getSelectedRow();
-        DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
-        String name=(String) model.getValueAt(selectedRow, 0);
-        String planned=Integer.toString((int) model.getValueAt(selectedRow, 1)) ;
-        String actual=Integer.toString((int) model.getValueAt(selectedRow, 2));
-        String dicription=(String) model.getValueAt(selectedRow, 4);
-        String date=(String) model.getValueAt(selectedRow, 5);
-        
-        
+        selectedRow = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        String name = (String) model.getValueAt(selectedRow, 0);
         jComboBox1.setSelectedItem(name);
-        lbl_Actual.setText(actual);
+
+        String planned = Integer.toString((int) model.getValueAt(selectedRow, 1));
         txt_Planned.setText(planned);
-        
+
+        String actual = Integer.toString((int) model.getValueAt(selectedRow, 2));
+        lbl_Actual.setText(actual);
+
+        String dicription = (String) model.getValueAt(selectedRow, 4);
+        txt_Discription.setText(dicription);
+
+        String date = (String) model.getValueAt(selectedRow, 5);
         try {
-            SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
             Date d = format.parse(date);
             jDateChooser1.setDate(d);
         } catch (ParseException ex) {
             Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
         }
-        txt_Discription.setText(dicription);
+
     }//GEN-LAST:event_jTable1MouseClicked
 
+    public boolean checking() {
+
+        Date date1 = jDateChooser2.getDate();
+        Date date2 = jDateChooser3.getDate();
+        boolean flag = true;
+        String missing = "You foegot to Enter \n";
+        if (date1 == null || date2 == null) {
+            missing += "searching date\n";
+            flag = false;
+        }
+        if (!flag) {
+            JOptionPane.showMessageDialog(null, missing);
+        }
+        return flag;
+
+    }
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
-        String date1=format.format(jDateChooser2.getDate());
-        String date2=format.format(jDateChooser3.getDate());
-        try {
-            DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            showFromDB(date1, date2);
-        } catch (SQLException ex) {
-            Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
+        if (checking()) {
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            String date1 = format.format(jDateChooser2.getDate());
+            String date2 = format.format(jDateChooser3.getDate());
+            try {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+                showFromDB(date1, date2);
+            } catch (SQLException ex) {
+                Logger.getLogger(BudgetExpense.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if(jComboBox1.getSelectedIndex()==0){
-            lbl_Actual.setText(Integer.toString(list1.get(0).getActual()));
-        }else if(jComboBox1.getSelectedIndex()==1){
-            lbl_Actual.setText(Integer.toString(list1.get(1).getActual()));
-        }else if(jComboBox1.getSelectedIndex()==2){
-            lbl_Actual.setText(Integer.toString(list1.get(2).getActual()));
-        }else if(jComboBox1.getSelectedIndex()==3){
-            lbl_Actual.setText(Integer.toString(list1.get(3).getActual()));
-        }else if(jComboBox1.getSelectedIndex()==4){
-            lbl_Actual.setText(Integer.toString(list1.get(4).getActual()));
+        if (jComboBox1.getSelectedIndex() == 0) {
+            lbl_Actual.setText(map.get(jComboBox1.getItemAt(0)).toString());
+
+        }
+        if (jComboBox1.getSelectedIndex() == 1) {
+            lbl_Actual.setText(map.get(jComboBox1.getItemAt(1)).toString());
+
+        }
+        if (jComboBox1.getSelectedIndex() == 2) {
+            lbl_Actual.setText(map.get(jComboBox1.getItemAt(2)).toString());
+
+        }
+        if (jComboBox1.getSelectedIndex() == 3) {
+            lbl_Actual.setText(map.get(jComboBox1.getItemAt(3)).toString());
+
+        }
+        if (jComboBox1.getSelectedIndex() == 4) {
+            lbl_Actual.setText(map.get(jComboBox1.getItemAt(4)).toString());
+
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         resetAllFields();
         try {
-            DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             showFromDB("", "");
         } catch (SQLException ex) {
@@ -661,9 +749,8 @@ public class BudgetExpense extends javax.swing.JFrame {
         new Main_Budget().setVisible(true);
     }//GEN-LAST:event_jLabel13MouseClicked
 
-    
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -687,10 +774,15 @@ public class BudgetExpense extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BudgetExpense().setVisible(true);
+
+                try {
+                    new BudgetExpense().setVisible(true);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
             }
         });
     }

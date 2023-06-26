@@ -1,13 +1,13 @@
-
 package Budget_Planner_New;
 
-
 public class income_var {
+
     String catogery;
     int actual;
-    public income_var(String catogery,int actual){
-        this.actual=actual;
-        this.catogery=catogery;
+
+    public income_var(String catogery, int actual) {
+        this.actual = actual;
+        this.catogery = catogery;
     }
 
     public String getCatogery() {
@@ -25,5 +25,5 @@ public class income_var {
     public void setActual(int actual) {
         this.actual = actual;
     }
-    
+
 }

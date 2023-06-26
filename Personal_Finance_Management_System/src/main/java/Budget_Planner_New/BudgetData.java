@@ -4,13 +4,13 @@
  */
 package Budget_Planner_New;
 
-import Budget_planner.*;
-
+//import Budget_planner.*;
 /**
  *
  * @author anass
  */
 public class BudgetData {
+
     private String name;
     private int planned;
     private int actual;
@@ -75,6 +75,4 @@ public class BudgetData {
         this.discription = discription;
     }
 
-    
-    
 }
